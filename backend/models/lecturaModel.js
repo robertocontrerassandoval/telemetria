@@ -1,16 +1,27 @@
-const db = require('../config/db');
+const pool = require('../config/db');
 
-const Lectura = {
-  async insertar(temperatura, humedad) {
-    const sql = 'INSERT INTO lecturas (temperatura, humedad) VALUES ($1, $2)';
-    await db.query(sql, [temperatura, humedad]);
-  },
-
-  async obtenerUltimas(limit = 10) {
-    const sql = 'SELECT * FROM lecturas ORDER BY fecha DESC LIMIT $1';
-    const resultado = await db.query(sql, [limit]);
-    return resultado.rows;
-  }
+const insertar = async (temperatura, humedad) => {
+  const fecha = new Date();
+  const query = `
+    INSERT INTO lecturas (fecha, temperatura, humedad)
+    VALUES ($1, $2, $3)
+  `;
+  const values = [fecha, temperatura, humedad];
+  await pool.query(query, values);
 };
 
-module.exports = Lectura;
+const obtenerUltimas = async () => {
+  const query = `
+    SELECT fecha, temperatura, humedad
+    FROM lecturas
+    ORDER BY fecha DESC
+    LIMIT 10
+  `;
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
+module.exports = {
+  insertar,
+  obtenerUltimas
+};

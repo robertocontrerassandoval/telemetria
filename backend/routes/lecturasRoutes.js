@@ -1,8 +1,12 @@
+// backend/routes/lecturaRoutes.js
 const express = require('express');
 const router = express.Router();
-const lecturaController = require('../controllers/lecturaController');
+const { obtenerLecturas, crearLectura, probarConexion } = require('../controllers/lecturaController');
 
-router.post('/temperatura', lecturaController.crearLectura);
-router.get('/temperaturas', lecturaController.obtenerLecturas);
+router.get('/temperaturas', obtenerLecturas);
+router.post('/temperaturas', crearLectura);
+
+// Ruta opcional para probar conexión
+router.get('/probar', probarConexion);
 
 module.exports = router;

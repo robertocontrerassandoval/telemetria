@@ -1,4 +1,5 @@
 const Lectura = require('../models/lecturaModel');
+const pool = require('../config/db');
 
 const crearLectura = async (req, res) => {
   const { temperatura, humedad } = req.body;
@@ -26,7 +27,17 @@ const obtenerLecturas = async (req, res) => {
   }
 };
 
+const probarConexion = async (req, res) => {
+  try {
+    await pool.query('SELECT NOW()');
+    res.json({ ok: true, mensaje: 'Conexión exitosa con PostgreSQL' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Fallo de conexión a la base de datos' });
+  }
+};
 module.exports = {
   crearLectura,
-  obtenerLecturas
+  obtenerLecturas,
+  probarConexion
 };
