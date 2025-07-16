@@ -18,25 +18,21 @@ function App() {
       .catch(console.error);
   }, []);
 
-  //actualizar la lista cada 5 segundos
+  //actualizar la lista cada 10 segundos
 
   useEffect(() => {
   const intervalo = setInterval(() => {
     fetch(`${API_URL}/temperaturas`)
       .then(res => res.json())
       .then(data => {
-        if (
-          data.length > 0 &&
-          (lecturas.length === 0 || data[data.length - 1].id !== lecturas[lecturas.length - 1].id)
-        ) {
-          setLecturas(data);
-        }
+        setLecturas(data);
       })
       .catch(console.error);
-  }, 5000);
+  }, 10000);
 
   return () => clearInterval(intervalo);
-}, [lecturas, API_URL]);
+}, []);  // <-- solo se ejecuta una vez, sin dependencias
+
 
  
 
