@@ -18,6 +18,23 @@ function App() {
       .catch(console.error);
   }, []);
 
+  //actualizar la lista cada 5 segundos
+  useEffect(() => {
+  const intervalo = setInterval(() => {
+    fetch(`${API_URL}/temperaturas`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.length > lecturas.length) {
+          setLecturas(data);
+        }
+      })
+      .catch(console.error);
+  }, 5000); // cada 5 segundos
+
+  return () => clearInterval(intervalo);
+}, [lecturas, API_URL]);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const tempNum = parseFloat(temperatura);
