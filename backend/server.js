@@ -8,7 +8,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://192.168.1.12:5173']
+  origin: [
+    'http://localhost:5173',
+     'http://192.168.1.12:5173',
+     'https://front-telemetria.onrender.com'
+    ]
 }));
 
 app.use(express.json());
