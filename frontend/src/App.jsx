@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import LecturasList from './components/LecturasList.jsx';
 
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -34,7 +37,29 @@ function App() {
 }, []);  // <-- solo se ejecuta una vez, sin dependencias
 
 
- 
+ const descargarExcel = () => {
+  // Convierte lecturas a formato de tabla (array de objetos)
+  const datos = lecturas.map(({ id, temperatura, humedad, createdAt }) => ({
+    ID: id,
+    Temperatura: temperatura,
+    Humedad: humedad,
+    Fecha: new Date(createdAt).toLocaleString()
+  }));
+
+  // Crea una hoja de Excel con los datos
+  const ws = XLSX.utils.json_to_sheet(datos);
+
+  // Crea un libro y agrega la hoja
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Lecturas');
+
+  // Genera un archivo binario de Excel
+  const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+
+  // Crea un blob y descarga el archivo
+  const blob = new Blob([wbout], { type: 'application/octet-stream' });
+  saveAs(blob, 'lecturas_telemetria.xlsx');
+};
 
 
   const handleSubmit = async (e) => {
@@ -186,6 +211,23 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null
   </h2>
 
   <LecturasList lecturas={lecturas} />
+
+  <button
+  onClick={descargarExcel}
+  style={{
+    marginBottom: '1rem',
+    padding: '0.7rem',
+    backgroundColor: '#2196F3',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1rem',
+    cursor: 'pointer'
+  }}
+>
+  Descargar Excel
+</button>
+
 </div>
 
   );
