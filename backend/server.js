@@ -5,7 +5,7 @@ const lecturaRoutes = require('./routes/lecturasRoutes');
 const crearTablaLecturas = require('./config/initDb');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors({
   origin: ['http://localhost:5173', 'http://192.168.1.12:5173']

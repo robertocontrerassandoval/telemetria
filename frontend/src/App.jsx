@@ -48,41 +48,127 @@ function App() {
     }
   };
 
+  // 👇 Este código debe ir arriba del `return`, dentro del componente
+const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null;
+
+
   return (
-    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
-      <h1>Lecturas de Temperatura y Humedad</h1>
+  <div style={{
+  padding: '2rem',
+  fontFamily: 'Arial, sans-serif',
+  maxWidth: '600px',
+  margin: '0 auto',
+  backgroundColor: '#f9f9f9',
+  borderRadius: '8px',
+  boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+}}>
+  <h1 style={{ textAlign: 'center', color: '#333' }}>
+    Lecturas de Temperatura y Humedad
+  </h1>
 
-      <LecturasList lecturas={lecturas} />
+  <form
+    onSubmit={handleSubmit}
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0.75rem',
+      marginBottom: '1.5rem'
+    }}
+  >
+    <input
+      type="text"
+      placeholder="Temperatura (°C)"
+      value={temperatura}
+      onChange={e => setTemperatura(e.target.value)}
+      style={{
+        padding: '0.6rem',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        fontSize: '1rem'
+      }}
+    />
+    <input
+      type="text"
+      placeholder="Humedad (%)"
+      value={humedad}
+      onChange={e => setHumedad(e.target.value)}
+      style={{
+        padding: '0.6rem',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        fontSize: '1rem'
+      }}
+    />
+    <button
+      type="submit"
+      style={{
+        padding: '0.7rem',
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        border: 'none',
+        borderRadius: '4px',
+        fontSize: '1rem',
+        cursor: 'pointer'
+      }}
+    >
+      Enviar
+    </button>
+  </form>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: '1rem' }}>
-        <input
-          type="text"
-          placeholder="Temperatura"
-          value={temperatura}
-          onChange={e => setTemperatura(e.target.value)}
-          style={{ marginRight: '0.5rem' }}
-        />
-        <input
-          type="text"
-          placeholder="Humedad"
-          value={humedad}
-          onChange={e => setHumedad(e.target.value)}
-          style={{ marginRight: '0.5rem' }}
-        />
-        <button type="submit">Enviar</button>
-      </form>
+  {mensaje && (
+    <p style={{
+      backgroundColor: '#e0ffe0',
+      color: '#2e7d32',
+      padding: '0.75rem',
+      borderRadius: '4px',
+      marginBottom: '1rem',
+      fontWeight: 'bold'
+    }}>
+      {mensaje}
+    </p>
+  )}
 
-      {mensaje && <p>{mensaje}</p>}
-
-      <h2>Últimas lecturas:</h2>
-      <ul>
-        {lecturas.map((l, i) => (
-          <li key={i}>
-            {new Date(l.fecha).toLocaleString()} — Temp: {l.temperatura}°C — Humedad: {l.humedad}%
-          </li>
-        ))}
-      </ul>
+  {/* 🔥 Recuadros con última lectura */}
+  <div style={{
+    display: 'flex',
+    gap: '1rem',
+    marginBottom: '1.5rem',
+    justifyContent: 'space-between'
+  }}>
+    <div style={{
+      flex: 1,
+      backgroundColor: '#ffebee',
+      borderLeft: '6px solid #f44336',
+      padding: '1rem',
+      borderRadius: '8px',
+      textAlign: 'center',
+      fontSize: '1.2rem'
+    }}>
+      🌡️ <strong>Temperatura:</strong><br />
+      {ultimaLectura ? `${ultimaLectura.temperatura} °C` : 'Sin lectura'}
     </div>
+
+    <div style={{
+      flex: 1,
+      backgroundColor: '#e3f2fd',
+      borderLeft: '6px solid #2196F3',
+      padding: '1rem',
+      borderRadius: '8px',
+      textAlign: 'center',
+      fontSize: '1.2rem'
+    }}>
+      💧 <strong>Humedad:</strong><br />
+      {ultimaLectura ? `${ultimaLectura.humedad} %` : 'Sin lectura'}
+    </div>
+  </div>
+
+  <h2 style={{ color: '#333', marginBottom: '0.5rem' }}>
+    Últimas lecturas:
+  </h2>
+
+  <LecturasList lecturas={lecturas} />
+</div>
+
   );
 }
 
