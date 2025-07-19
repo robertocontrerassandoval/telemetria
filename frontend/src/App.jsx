@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LecturasList from './components/LecturasList.jsx';
 import Login from './components/Login.jsx'; // 👉 Importa el nuevo componente
+import ChartPanel from './components/ChartPanel.jsx';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -110,26 +111,66 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null
   }
 
   return (
-  <div style={{
+ 
+<div style={{
   padding: '2rem',
-  fontFamily: 'Arial, sans-serif',
-  maxWidth: '600px',
+  fontFamily: 'Roboto, sans-serif',
+  maxWidth: '900px',
   margin: '0 auto',
-  backgroundColor: '#f9f9f9',
-  borderRadius: '8px',
-  boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
+  backgroundColor: '#f4f6f8',
+  borderRadius: '10px',
+  boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
 }}>
   <h1 style={{ textAlign: 'center', color: '#333' }}>
-    Lecturas de Temperatura y Humedad
+    📊 Dashboard de Telemetría Ambiental
   </h1>
 
+  {/* KPI Cards */}
+  <div style={{ display: 'flex', gap: '1rem', margin: '1rem 0', justifyContent: 'space-between' }}>
+    <div style={{
+      flex: 1,
+      backgroundColor: '#fff',
+      borderLeft: '6px solid #f44336',
+      padding: '1rem',
+      borderRadius: '8px',
+      textAlign: 'center',
+      fontSize: '1.2rem',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+    }}>
+      🌡️ <strong>Temperatura:</strong><br />
+      {ultimaLectura ? `${ultimaLectura.temperatura} °C` : 'Sin lectura'}
+    </div>
+
+    <div style={{
+      flex: 1,
+      backgroundColor: '#fff',
+      borderLeft: '6px solid #2196F3',
+      padding: '1rem',
+      borderRadius: '8px',
+      textAlign: 'center',
+      fontSize: '1.2rem',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
+    }}>
+      💧 <strong>Humedad:</strong><br />
+      {ultimaLectura ? `${ultimaLectura.humedad} %` : 'Sin lectura'}
+    </div>
+  </div>
+
+  {/* 📈 Chart */}
+  <ChartPanel lecturas={lecturas} />
+
+  {/* 📥 Formulario */}
   <form
     onSubmit={handleSubmit}
     style={{
       display: 'flex',
       flexDirection: 'column',
       gap: '0.75rem',
-      marginBottom: '1.5rem'
+      marginBottom: '1.5rem',
+      backgroundColor: '#fff',
+      padding: '1rem',
+      borderRadius: '8px',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
     }}
   >
     <input
@@ -168,10 +209,11 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null
         cursor: 'pointer'
       }}
     >
-      Enviar
+      Enviar Lectura
     </button>
   </form>
 
+  {/* 🟩 Mensaje */}
   {mensaje && (
     <p style={{
       backgroundColor: '#e0ffe0',
@@ -185,62 +227,25 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null
     </p>
   )}
 
-  {/* 🔥 Recuadros con última lectura */}
-  <div style={{
-    display: 'flex',
-    gap: '1rem',
-    marginBottom: '1.5rem',
-    justifyContent: 'space-between'
-  }}>
-    <div style={{
-      flex: 1,
-      backgroundColor: '#ffebee',
-      borderLeft: '6px solid #f44336',
-      padding: '1rem',
-      borderRadius: '8px',
-      textAlign: 'center',
-      fontSize: '1.2rem'
-    }}>
-      🌡️ <strong>Temperatura:</strong><br />
-      {ultimaLectura ? `${ultimaLectura.temperatura} °C` : 'Sin lectura'}
-    </div>
-
-    <div style={{
-      flex: 1,
-      backgroundColor: '#e3f2fd',
-      borderLeft: '6px solid #2196F3',
-      padding: '1rem',
-      borderRadius: '8px',
-      textAlign: 'center',
-      fontSize: '1.2rem'
-    }}>
-      💧 <strong>Humedad:</strong><br />
-      {ultimaLectura ? `${ultimaLectura.humedad} %` : 'Sin lectura'}
-    </div>
-  </div>
-
-  <h2 style={{ color: '#333', marginBottom: '0.5rem' }}>
-    Últimas lecturas:
-  </h2>
-
+  {/* 🧾 Lista de lecturas */}
   <LecturasList lecturas={lecturas} />
 
+  {/* 📁 Botón Excel */}
   <button
-  onClick={descargarExcel}
-  style={{
-    marginBottom: '1rem',
-    padding: '0.7rem',
-    backgroundColor: '#2196F3',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    fontSize: '1rem',
-    cursor: 'pointer'
-  }}
->
-  Descargar Excel
-</button>
-
+    onClick={descargarExcel}
+    style={{
+      marginTop: '1rem',
+      padding: '0.7rem',
+      backgroundColor: '#2196F3',
+      color: 'white',
+      border: 'none',
+      borderRadius: '4px',
+      fontSize: '1rem',
+      cursor: 'pointer'
+    }}
+  >
+    Descargar Excel
+  </button>
 </div>
 
   );
