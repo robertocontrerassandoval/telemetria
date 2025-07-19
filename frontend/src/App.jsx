@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LecturasList from './components/LecturasList.jsx';
+import Login from './components/Login.jsx'; // 👉 Importa el nuevo componente
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
@@ -14,6 +15,11 @@ function App() {
   const [humedad, setHumedad] = useState('');
   const [mensaje, setMensaje] = useState('');
 
+    // Si no está autenticado, muestra el formulario de login
+  if (!isAuthenticated) {
+    return <Login onLogin={() => setIsAuthenticated(true)} />;
+  }
+  
   useEffect(() => {
     fetch(`${API_URL}/temperaturas`)
       .then(res => res.json())
