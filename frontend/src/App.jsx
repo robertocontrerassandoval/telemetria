@@ -38,7 +38,7 @@ function App() {
         setLecturas(data);
       })
       .catch(console.error);
-  }, ); //aqui va el tiempo de la medicion
+  }, 100000); //aqui va el tiempo de la medicion
 
   return () => clearInterval(intervalo);
 }, []);  // <-- solo se ejecuta una vez, sin dependencias
