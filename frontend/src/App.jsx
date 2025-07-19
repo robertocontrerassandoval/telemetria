@@ -16,10 +16,7 @@ function App() {
   const [humedad, setHumedad] = useState('');
   const [mensaje, setMensaje] = useState('');
 
-    // Si no está autenticado, muestra el formulario de login
-  if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
-  }
+   
   
   useEffect(() => {
     fetch(`${API_URL}/temperaturas`)
@@ -38,7 +35,7 @@ function App() {
         setLecturas(data);
       })
       .catch(console.error);
-  }, 100000); //aqui va el tiempo de la medicion
+  }, 10000); //aqui va el tiempo de la medicion
 
   return () => clearInterval(intervalo);
 }, []);  // <-- solo se ejecuta una vez, sin dependencias
@@ -102,6 +99,10 @@ function App() {
   // 👇 Este código debe ir arriba del `return`, dentro del componente
 const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null;
 
+ // Si no está autenticado, muestra el formulario de login
+  if (!isAuthenticated) {
+    return <Login onLogin={() => setIsAuthenticated(true)} />;
+  }
 
   return (
   <div style={{
