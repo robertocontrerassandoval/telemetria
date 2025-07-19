@@ -43,12 +43,17 @@ function App() {
 
  const descargarExcel = () => {
   // Convierte lecturas a formato de tabla (array de objetos)
-  const datos = lecturas.map(({ id, temperatura, humedad, createdAt }) => ({
+  const datos = lecturas.map(({ id, temperatura, humedad, createdAt }) => {
+  const fecha = new Date(createdAt);
+  const fechaValida = !isNaN(fecha.getTime());
+
+  return {
     ID: id,
     Temperatura: temperatura,
     Humedad: humedad,
-    Fecha: new Date(createdAt).toLocaleString()
-  }));
+    Fecha: fechaValida ? fecha.toLocaleString() : 'Fecha inválida'
+  };
+});
 
   // Crea una hoja de Excel con los datos
   const ws = XLSX.utils.json_to_sheet(datos);
