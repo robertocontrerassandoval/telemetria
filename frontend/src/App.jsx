@@ -10,6 +10,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // 👈 Autenticación
   const [lecturas, setLecturas] = useState([]);
   const [temperatura, setTemperatura] = useState('');
   const [humedad, setHumedad] = useState('');
