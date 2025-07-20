@@ -44,15 +44,15 @@ function App() {
 
  const descargarExcel = () => {
   // Convierte lecturas a formato de tabla (array de objetos)
-  const datos = lecturas.map(({ id, temperatura, humedad, createdAt }) => {
-  const fecha = new Date(createdAt);
-  const fechaValida = !isNaN(fecha.getTime());
+  const datos = lecturas.map(({ id, temperatura, humedad, fecha  }) => {
+  const fechaObj = new Date(fecha);
+  const fechaValida = !isNaN(fechaObj.getTime());
 
   return {
     ID: id,
     Temperatura: temperatura,
     Humedad: humedad,
-    Fecha: fechaValida ? fecha.toLocaleString() : 'Fecha inválida'
+    Fecha: fechaValida ? fechaObj  : 'Fecha inválida'
   };
 });
 
