@@ -5,7 +5,7 @@ export default function LecturasList({ lecturas }) {
     <ul>
       {lecturas.map((l, i) => (
         <li key={i}>
-          {new Date(l.createdAt).toLocaleString()} — Temp: {l.temperatura}°C — Humedad: {l.humedad}%
+          {new Date(l.fecha).toLocaleString()} — Temp: {l.temperatura}°C — Humedad: {l.humedad}%
         </li>
       ))}
     </ul>
