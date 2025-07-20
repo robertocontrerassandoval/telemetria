@@ -42,31 +42,38 @@ function App() {
 }, []);  // <-- solo se ejecuta una vez, sin dependencias
 
 
- const descargarExcel = () => {
-  // Convierte lecturas a formato de tabla (array de objetos)
-  const datos = lecturas.map(({ id, temperatura, humedad, fecha  }) => {
-  const fechaObj = new Date(fecha);
-  const fechaValida = !isNaN(fechaObj.getTime());
+const descargarExcel = (lecturas) => {
+  // Convierte lecturas a un array de objetos para la tabla
+  const datos = lecturas.map(({ id, temperatura, humedad, fecha }) => {
+    const fechaObj = new Date(fecha);
+    const fechaValida = !isNaN(fechaObj.getTime());
 
-  return {
-    ID: id,
-    Temperatura: temperatura,
-    Humedad: humedad,
-    Fecha: fechaValida ? fechaObj  : 'Fecha inválida'
-  };
-});
+    return {
+      ID: id,
+      Temperatura: temperatura,
+      Humedad: humedad,
+      Fecha: fechaValida ? fechaObj : null // ⬅️ Usa Date real, no string
+    };
+  });
 
-  // Crea una hoja de Excel con los datos
+  // Crea la hoja de cálculo
   const ws = XLSX.utils.json_to_sheet(datos);
 
-  // Crea un libro y agrega la hoja
+  // ⏱️ Aplica formato a la columna "Fecha" (columna D)
+  Object.keys(ws).forEach((cell) => {
+    if (cell.startsWith('D') && cell !== 'D1') {
+      ws[cell].z = 'dd/mm/yyyy hh:mm:ss'; // ⬅️ Formato con hora
+    }
+  });
+
+  // Crea el libro de Excel
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Lecturas');
 
   // Genera un archivo binario de Excel
   const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
-  // Crea un blob y descarga el archivo
+  // Descarga el archivo
   const blob = new Blob([wbout], { type: 'application/octet-stream' });
   saveAs(blob, 'lecturas_telemetria.xlsx');
 };
