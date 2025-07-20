@@ -43,7 +43,6 @@ function App() {
 
 
 const descargarExcel = (lecturas) => {
-    console.log('Lecturas:', lecturas); // 🐞 Verifica que es un array
 
   // Convierte lecturas a un array de objetos para la tabla
   const datos = lecturas.map(({ id, temperatura, humedad, fecha }) => {
@@ -241,7 +240,7 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null
 
   {/* 📁 Botón Excel */}
   <button
-    onClick={descargarExcel}
+    onClick={ () => descargarExcel(lecturas)}
     style={{
       marginTop: '1rem',
       padding: '0.7rem',
