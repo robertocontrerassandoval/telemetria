@@ -6,7 +6,7 @@ Chart.register(LineElement, PointElement, CategoryScale, LinearScale, Legend, To
 
 function ChartPanel({ lecturas }) {
   const data = {
-    labels: lecturas.map(l => new Date(l.createdAt).toLocaleTimeString()),
+    labels: lecturas.map(l => new Date(l.fecha).toLocaleTimeString()),
     datasets: [
       {
         label: 'Temperatura (°C)',
