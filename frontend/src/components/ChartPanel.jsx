@@ -5,6 +5,9 @@ import { Chart, LineElement, PointElement, CategoryScale, LinearScale, Legend, T
 Chart.register(LineElement, PointElement, CategoryScale, LinearScale, Legend, Tooltip);
 
 function ChartPanel({ lecturas }) {
+
+    console.log('Fechas recibidas:', lecturas.map(l => l.fecha));
+    
   const data = {
     labels: lecturas.map(l => new Date(l.fecha).toLocaleTimeString()),
     datasets: [
