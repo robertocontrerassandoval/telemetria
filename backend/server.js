@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const lecturaRoutes = require('./routes/lecturasRoutes');
 const crearTablaLecturas = require('./config/initDb');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,7 +17,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/', lecturaRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api', lecturaRoutes); // puedes cambiar esto si ya tenías montado así
 
 const iniciarServidor = async () => {
   await crearTablaLecturas();  // Crea la tabla si no existe

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import LecturasList from './components/LecturasList.jsx';
-import Login from './components/Login.jsx'; // 👉 Importa el nuevo componente
+import Login from './components/Login.jsx'; 
 import ChartPanel from './components/ChartPanel.jsx';
 
 import * as XLSX from 'xlsx';
@@ -12,8 +12,8 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // 👈 Autenticación
-  const [lecturas, setLecturas] = useState([]);
-  const [temperatura, setTemperatura] = useState('');
+  const [lecturas, setLecturas] = useState([]); //arreglo
+  const [temperatura, setTemperatura] = useState(''); //string
   const [humedad, setHumedad] = useState('');
   const [mensaje, setMensaje] = useState('');
 
@@ -82,7 +82,7 @@ const descargarExcel = (lecturas) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const tempNum = parseFloat(temperatura);
+    const tempNum = parseFloat(temperatura); //de string a numero
     const humNum = parseFloat(humedad);
 
     if (isNaN(tempNum) || isNaN(humNum)) {

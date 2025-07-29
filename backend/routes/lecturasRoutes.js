@@ -1,12 +1,19 @@
 // backend/routes/lecturaRoutes.js
 const express = require('express');
 const router = express.Router();
-const { obtenerLecturas, crearLectura, probarConexion } = require('../controllers/lecturaController');
+const {
+  obtenerLecturas,
+  crearLectura,
+  probarConexion
+} = require('../controllers/lecturaController');
 
-router.get('/temperaturas', obtenerLecturas);
-router.post('/temperaturas', crearLectura);
+const verificarToken = require('../middleware/authMiddleware');
 
-// Ruta opcional para probar conexión
+// Ruta pública para testear la conexión
 router.get('/probar', probarConexion);
+
+// Rutas protegidas
+router.get('/temperaturas', verificarToken, obtenerLecturas);
+router.post('/temperaturas', verificarToken, crearLectura);
 
 module.exports = router;
