@@ -1,20 +1,39 @@
 import React, { useState } from 'react';
+import Register from './Register';
 
 const Login = ({ onLogin }) => {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
 
-    // Usuario y contraseña hardcodeados (puedes conectarlo a backend después)
-    if (usuario === 'admin' && contrasena === '1234') {
-      onLogin(); // Llama a la función del padre para indicar login exitoso
-    } else {
-      setError('Usuario o contraseña incorrectos');
+  try {
+    const res = await fetch('https://backend-telemetria.onrender.com/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: usuario, password: contrasena })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.msg || 'Credenciales inválidas');
     }
-  };
+
+    // Aquí puedes guardar el token en localStorage si tu backend lo devuelve
+    // localStorage.setItem('token', data.token);
+
+    onLogin(); // Login exitoso
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
   return (
     <div style={{
@@ -57,6 +76,7 @@ const Login = ({ onLogin }) => {
         </button>
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       </form>
+      <Register />
     </div>
   );
 };

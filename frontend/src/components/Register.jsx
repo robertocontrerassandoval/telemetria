@@ -12,7 +12,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch('https://TU-BACKEND.onrender.com/api/auth/register', {
+      const res = await fetch('https://backend-telemetria.onrender.com/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: usuario, password: contrasena }),
