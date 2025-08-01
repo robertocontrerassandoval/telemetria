@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Register from './Register';
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
@@ -76,7 +78,33 @@ const Login = ({ onLogin }) => {
         </button>
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       </form>
-      <Register />
+
+      <div style={{ /* tus estilos */ }}>
+      <h2 style={{ textAlign: 'center' }}>Iniciar Sesión</h2>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {/* inputs y botón de login */}
+      </form>
+
+      {/* 👇 Botón para ir al registro */}
+      <button
+        onClick={() => navigate('/register')}
+        style={{
+          marginTop: '1rem',
+          padding: '0.6rem',
+          backgroundColor: '#2196F3',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          width: '100%'
+        }}
+      >
+        Crear cuenta
+      </button>
+
+      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
+    </div>
+    
     </div>
   );
 };
