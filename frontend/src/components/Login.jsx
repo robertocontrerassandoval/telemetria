@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Register from './Register';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
@@ -9,33 +8,30 @@ const Login = ({ onLogin }) => {
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
+    e.preventDefault();
+    setError('');
 
-  try {
-    const res = await fetch('https://backend-telemetria.onrender.com/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username: usuario, password: contrasena })
-    });
+    try {
+      const res = await fetch('https://backend-telemetria.onrender.com/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: usuario, password: contrasena }),
+      });
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.msg || 'Credenciales inválidas');
+      if (!res.ok) {
+        throw new Error(data.msg || 'Credenciales inválidas');
+      }
+
+      // localStorage.setItem('token', data.token); // Si usas token
+
+      onLogin(); // Login exitoso
+      navigate('/home'); // Redirige al dashboard
+    } catch (err) {
+      setError(err.message);
     }
-
-    // Aquí puedes guardar el token en localStorage si tu backend lo devuelve
-    // localStorage.setItem('token', data.token);
-
-    onLogin(); // Login exitoso
-  } catch (err) {
-    setError(err.message);
-  }
-};
-
+  };
 
   return (
     <div style={{
@@ -76,16 +72,9 @@ const Login = ({ onLogin }) => {
         >
           Entrar
         </button>
-        {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       </form>
 
-      <div style={{ /* tus estilos */ }}>
-      <h2 style={{ textAlign: 'center' }}>Iniciar Sesión</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {/* inputs y botón de login */}
-      </form>
-
-      {/* 👇 Botón para ir al registro */}
+      {/* Botón para ir a registro */}
       <button
         onClick={() => navigate('/register')}
         style={{
@@ -102,9 +91,7 @@ const Login = ({ onLogin }) => {
         Crear cuenta
       </button>
 
-      {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
-    </div>
-    
+      {error && <p style={{ color: 'red', textAlign: 'center', marginTop: '1rem' }}>{error}</p>}
     </div>
   );
 };
