@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import LecturasList from './components/LecturasList.jsx';
-import Login from './components/Login.jsx'; 
+import LecturasList from './LecturasList.jsx';
 import ChartPanel from './components/ChartPanel.jsx';
 
 import * as XLSX from 'xlsx';
