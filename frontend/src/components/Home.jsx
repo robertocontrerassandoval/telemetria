@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LecturasList from './LecturasList.jsx';
-import ChartPanel from './components/ChartPanel.jsx';
+import Login from './Login.jsx'; 
+import ChartPanel from './ChartPanel.jsx';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
