@@ -18,7 +18,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
-app.use('/api', lecturaRoutes); // puedes cambiar esto si ya tenías montado así
+app.use('/api/lecturas', lecturaRoutes); // puedes cambiar esto si ya tenías montado así
 
 const iniciarServidor = async () => {
   await inicializarBD();  // Crea la tabla si no existe
