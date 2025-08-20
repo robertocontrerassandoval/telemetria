@@ -13,7 +13,7 @@ const verificarToken = require('../middleware/authMiddleware');
 router.get('/probar', probarConexion);
 
 // Rutas protegidas
-router.get('/api/temperaturas', verificarToken, obtenerLecturas);
-router.post('/api/temperaturas', verificarToken, crearLectura);
+router.get('/', verificarToken, obtenerLecturas);
+router.post('/', verificarToken, crearLectura);
 
 module.exports = router;
