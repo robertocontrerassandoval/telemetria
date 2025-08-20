@@ -7,8 +7,7 @@ const Login = ({ onLogin }) => {
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
 
-  localStorage.setItem('token', data.token); // ← guarda token si existe
-onLogin(); // ← continúa con autenticación
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +22,15 @@ onLogin(); // ← continúa con autenticación
 
       const data = await res.json();
 
+      if (!usuario || !contrasena) {
+  setError('Debes completar todos los campos');
+  return;
+}
+
       if (!res.ok) {
         throw new Error(data.msg || 'Credenciales inválidas');
       }
-
-      // localStorage.setItem('token', data.token); // Si usas token
+        localStorage.setItem('token', data.token); // ← guarda token si existe
 
       onLogin(); // Login exitoso
       navigate('/home'); // Redirige al dashboard

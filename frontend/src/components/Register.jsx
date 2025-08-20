@@ -26,31 +26,39 @@ const Register = () => {
       setError('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
+try {
+  setLoading(true);
+  const res = await fetch(`${API_URL}/api/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: usuario, password: contrasena }),
+  });
 
-    try {
-      setLoading(true);
-      const res = await fetch(`${API_URL}/api/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: usuario, password: contrasena }),
-      });
-      const data = await res.json();
+  let data;
+  try {
+    data = await res.json(); // intenta parsear JSON
+  } catch (jsonError) {
+    throw new Error('Respuesta inválida del servidor');
+  }
 
-      if (!res.ok) throw new Error(data.msg || 'Error al registrar');
+  if (!res.ok) {
+    throw new Error(data?.msg || 'Error al registrar');
+  }
 
-      setMensaje(data.msg || 'Registro exitoso');
-      setUsuario('');
-      setContrasena('');
+  setMensaje(data.msg || 'Registro exitoso');
+  setUsuario('');
+  setContrasena('');
 
-      // Redirigir después de 2 segundos
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-    } catch (err) {
-      setError(err.message || 'Error al registrar');
-    } finally {
-      setLoading(false);
-    }
+  setTimeout(() => {
+    navigate('/login');
+  }, 2000);
+} catch (err) {
+  setError(err.message || 'Error al registrar');
+} finally {
+  setLoading(false);
+}
+
+   
   };
 
   return (
