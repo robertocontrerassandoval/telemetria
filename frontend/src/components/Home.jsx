@@ -21,7 +21,12 @@ function Home() {
   
 useEffect(() => {
   const fetchLecturas = () => {
-    fetch(`${API_URL}/temperaturas`)
+     const token = localStorage.getItem('token');
+    fetch(`${API_URL}/temperaturas`), {
+      headers: {
+        'Authorization': `Bearer ${token}` 
+       }
+    }
       .then(res => res.json())
       .then(setLecturas)
       .catch(console.error);
@@ -82,17 +87,26 @@ const descargarExcel = (lecturas) => {
     }
 
     try {
-      const res = await fetch(`${API_URL}/temperaturas`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ temperatura: tempNum, humedad: humNum })
-      });
+      const token = localStorage.getItem('token');
+
+const res = await fetch(`${API_URL}/temperaturas`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`  // 👈 Aquí agregas el token
+  },
+  body: JSON.stringify({ temperatura: tempNum, humedad: humNum })
+});
       const data = await res.json();
       setMensaje(data.mensaje || 'Lectura enviada');
 
-      const res2 = await fetch(`${API_URL}/temperaturas`);
-      const nuevasLecturas = await res2.json();
-      setLecturas(nuevasLecturas);
+     const res2 = await fetch(`${API_URL}/temperaturas`, {
+      headers: {
+        'Authorization': `Bearer ${token}`  // 👈 También en GET
+      }
+    });
+    const nuevasLecturas = await res2.json();
+    setLecturas(nuevasLecturas);
 
       setTemperatura('');
       setHumedad('');

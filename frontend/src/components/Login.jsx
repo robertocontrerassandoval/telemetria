@@ -7,6 +7,9 @@ const Login = ({ onLogin }) => {
   const [contrasena, setContrasena] = useState('');
   const [error, setError] = useState('');
 
+  localStorage.setItem('token', data.token); // ← guarda token si existe
+onLogin(); // ← continúa con autenticación
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
