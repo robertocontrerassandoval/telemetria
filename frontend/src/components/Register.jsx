@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 const API_URL = import.meta.env.VITE_API_URL;
 
 const Register = () => {
-  const [usuario, setUsuario] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,11 +18,11 @@ const Register = () => {
     setMensaje('');
 
     // Validación básica
-    if (!usuario || !contrasena) {
+    if (!username || !password) {
       setError('Todos los campos son obligatorios.');
       return;
     }
-    if (contrasena.length < 6) {
+    if (password.length < 6) {
       setError('La contraseña debe tener al menos 6 caracteres.');
       return;
     }
@@ -31,7 +31,7 @@ try {
   const res = await fetch(`${API_URL}/api/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: usuario, password: contrasena }),
+    body: JSON.stringify({ username: username, password: password }),
   });
 
   let data;
@@ -46,8 +46,8 @@ try {
   }
 
   setMensaje(data.msg || 'Registro exitoso');
-  setUsuario('');
-  setContrasena('');
+  setUsername('');
+  setPassword('');
 
   setTimeout(() => {
     navigate('/login');
@@ -77,8 +77,8 @@ try {
         <input
           type="text"
           placeholder="Nombre de usuario"
-          value={usuario}
-          onChange={e => setUsuario(e.target.value)}
+          value={username}
+          onChange={e => setUsername(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px' }}
           required
         />
@@ -86,15 +86,15 @@ try {
         <input
           type="password"
           placeholder="Contraseña"
-          value={contrasena}
-          onChange={e => setContrasena(e.target.value)}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px' }}
           required
         />
 
         <button
           type="submit"
-          disabled={loading || !usuario || !contrasena}
+          disabled={loading || !username || !password}
           style={{
             padding: '0.7rem',
             backgroundColor: loading ? '#999' : '#4CAF50',

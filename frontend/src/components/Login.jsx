@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState('');
-  const [contrasena, setContrasena] = useState('');
+  const [username, setUsuario] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
 
@@ -14,15 +16,15 @@ const Login = ({ onLogin }) => {
     setError('');
 
     try {
-      const res = await fetch('https://backend-telemetria.onrender.com/api/auth/login', {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: usuario, password: contrasena }),
+        body: JSON.stringify({ username: username, password: password }),
       });
 
       const data = await res.json();
 
-      if (!usuario || !contrasena) {
+      if (!username || !password) {
   setError('Debes completar todos los campos');
   return;
 }
@@ -54,15 +56,15 @@ const Login = ({ onLogin }) => {
         <input
           type="text"
           placeholder="Usuario"
-          value={usuario}
+          value={username}
           onChange={e => setUsuario(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px' }}
         />
         <input
           type="password"
           placeholder="Contraseña"
-          value={contrasena}
-          onChange={e => setContrasena(e.target.value)}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           style={{ padding: '0.6rem', border: '1px solid #ccc', borderRadius: '4px' }}
         />
         <button
