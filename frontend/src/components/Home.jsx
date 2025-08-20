@@ -22,11 +22,11 @@ function Home() {
 useEffect(() => {
   const fetchLecturas = () => {
      const token = localStorage.getItem('token');
-    fetch(`${API_URL}/temperaturas`), {
-      headers: {
-        'Authorization': `Bearer ${token}` 
-       }
-    }
+    fetch(`${API_URL}/temperaturas`, {
+  headers: {
+    'Authorization': `Bearer ${token}`
+  }
+})
       .then(res => res.json())
       .then(setLecturas)
       .catch(console.error);
