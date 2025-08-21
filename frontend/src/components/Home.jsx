@@ -85,7 +85,7 @@ const descargarExcel = (lecturas) => {
     }
 
     try {
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token');
 
 const res = await fetch(`${API_URL}/api/lecturas`, {
   method: 'POST',
