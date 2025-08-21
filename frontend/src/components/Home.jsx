@@ -149,7 +149,9 @@ console.log("Última lectura en dashhhhhh:", ultimaLectura);
       boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
     }}>
       🌡️ <strong>Temperatura:</strong><br />
-      {ultimaLectura ? `${ultimaLectura.temperatura} °C` : 'Sin lectura'}
+     {ultimaLectura && ultimaLectura.temperatura !== 0
+  ? `${ultimaLectura.temperatura} °C`
+  : 'Sin lectura'}
     </div>
 
     <div style={{
