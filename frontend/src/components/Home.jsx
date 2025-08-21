@@ -19,20 +19,45 @@ function Home() {
 
    
   
-useEffect(() => {
-  const fetchLecturas = () => {
+const fetchLecturas = () => {
     fetch(`${API_URL}/api/lecturas`)
       .then(res => res.json())
       .then((data) => {
-        console.log("Lecturas recibidas:", data);  // 👈 Añade esto
+        console.log("Lecturas recibidas:", data);
         setLecturas(data);
       })
       .catch(console.error);
   };
-  fetchLecturas();
-  const intervalo = setInterval(fetchLecturas, 10000);
-  return () => clearInterval(intervalo);
-}, []);
+
+  // 🕒 Actualización automática en horarios programados
+  useEffect(() => {
+    const horariosPermitidos = [
+      { hora: 8, minuto: 0 },
+      { hora: 16, minuto: 20 }
+    ];
+
+    let actualizadoHoy = {};
+
+    const verificarHorario = () => {
+      const ahora = new Date();
+      const hora = ahora.getHours();
+      const minuto = ahora.getMinutes();
+      const hoy = ahora.toDateString();
+
+      horariosPermitidos.forEach(({ hora: h, minuto: m }) => {
+        const clave = `${h}:${m}-${hoy}`;
+        if (hora === h && minuto === m && !actualizadoHoy[clave]) {
+          console.log(`⏰ Hora coincidente: ${h}:${m}, actualizando lecturas`);
+          fetchLecturas();
+          actualizadoHoy[clave] = true;
+        }
+      });
+    };
+
+    const intervalo = setInterval(verificarHorario, 30000);
+    return () => clearInterval(intervalo);
+  }, []);
+
 
 
 
@@ -120,6 +145,8 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[0] : null;
     return <Login onLogin={() => setIsAuthenticated(true)} />;
   }
 console.log("Última lectura en dashhhhhh:", ultimaLectura);
+
+
   return (
  
 <div style={{
@@ -224,6 +251,22 @@ console.log("Última lectura en dashhhhhh:", ultimaLectura);
       Enviar Lectura
     </button>
   </form>
+
+  {/* 📦 Botón manual de actualización */}
+      <button
+        onClick={fetchLecturas}
+        style={{
+          padding: '0.5rem 1rem',
+          backgroundColor: '#2196F3',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          marginBottom: '1rem',
+          cursor: 'pointer'
+        }}
+      >
+        🔄 Actualizar lecturas
+      </button>
 
   {/* 🟩 Mensaje */}
   {mensaje && (
