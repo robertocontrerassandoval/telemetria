@@ -21,10 +21,12 @@ function Home() {
   
 useEffect(() => {
   const fetchLecturas = () => {
-     const token = localStorage.getItem('token');
-    fetch(`${API_URL}/api/lecturas`, )
+    fetch(`${API_URL}/api/lecturas`)
       .then(res => res.json())
-      .then(setLecturas)
+      .then((data) => {
+        console.log("Lecturas recibidas:", data);  // 👈 Añade esto
+        setLecturas(data);
+      })
       .catch(console.error);
   };
   fetchLecturas();
