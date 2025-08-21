@@ -114,8 +114,7 @@ const res = await fetch(`${API_URL}/api/lecturas`, {
   };
 
   // 👇 Este código debe ir arriba del `return`, dentro del componente
-const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null;
-
+const ultimaLectura = lecturas.length > 0 ? lecturas[0] : null;
  // Si no está autenticado, muestra el formulario de login
   if (!isAuthenticated) {
     return <Login onLogin={() => setIsAuthenticated(true)} />;
