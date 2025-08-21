@@ -13,7 +13,7 @@ const verificarToken = require('../middleware/authMiddleware');
 router.get('/probar', probarConexion);
 
 // Rutas protegidas
-router.get('/', verificarToken, obtenerLecturas);
-router.post('/', verificarToken, crearLectura);
+router.get('/', obtenerLecturas);
+router.post('/',  crearLectura);
 
 module.exports = router;
