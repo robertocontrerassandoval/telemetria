@@ -33,7 +33,7 @@ const fetchLecturas = () => {
   useEffect(() => {
     const horariosPermitidos = [
       { hora: 8, minuto: 0 },
-      { hora: 16, minuto: 20 }
+      { hora: 16, minuto: 35 }
     ];
 
     let actualizadoHoy = {};
