@@ -85,20 +85,20 @@ const descargarExcel = (lecturas) => {
     try {
       const token = localStorage.getItem('token');
 
-const res = await fetch(`${API_URL}/temperaturas`, {
+const res = await fetch(`${API_URL}/api/lecturas`, {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`  // 👈 Aquí agregas el token
+    //'Authorization': `Bearer ${token}`  // 👈 Aquí agregas el token
   },
   body: JSON.stringify({ temperatura: tempNum, humedad: humNum })
 });
       const data = await res.json();
       setMensaje(data.mensaje || 'Lectura enviada');
 
-     const res2 = await fetch(`${API_URL}/temperaturas`, {
+     const res2 = await fetch(`${API_URL}/api/lecturas`, {
       headers: {
-        'Authorization': `Bearer ${token}`  // 👈 También en GET
+       // 'Authorization': `Bearer ${token}`  // 👈 También en GET
       }
     });
     const nuevasLecturas = await res2.json();
