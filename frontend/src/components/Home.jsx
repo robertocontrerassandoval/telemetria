@@ -120,7 +120,7 @@ const ultimaLectura = lecturas.length > 0 ? lecturas[lecturas.length - 1] : null
   if (!isAuthenticated) {
     return <Login onLogin={() => setIsAuthenticated(true)} />;
   }
-
+console.log("Última lectura en dashhhhhh:", ultimaLectura);
   return (
  
 <div style={{
