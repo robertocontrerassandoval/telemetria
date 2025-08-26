@@ -33,3 +33,30 @@ th, td {
   border: 1px solid #ddd;
   text-align: center;
 }
+
+/* KpiCard */
+
+.kpi-container {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+  justify-content: space-between;
+}
+
+.kpi-card {
+  flex: 1;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.kpi-card.temperature {
+  border-left: 6px solid #f44336;
+}
+
+.kpi-card.humidity {
+  border-left: 6px solid #2196F3;
+}

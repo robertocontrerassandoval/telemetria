@@ -5,6 +5,7 @@ import ChartPanel from './ChartPanel.jsx';
 
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
+import KpiCards from './KpiCard.jsx';
 
 //Api//
 const API_URL = import.meta.env.VITE_API_URL;
@@ -163,37 +164,8 @@ console.log("Última lectura en dashhhhhh:", ultimaLectura);
   </h1>
 
   {/* KPI Cards */}
-  <div style={{ display: 'flex', gap: '1rem', margin: '1rem 0', justifyContent: 'space-between' }}>
-    <div style={{
-      flex: 1,
-      backgroundColor: '#fff',
-      borderLeft: '6px solid #f44336',
-      padding: '1rem',
-      borderRadius: '8px',
-      textAlign: 'center',
-      fontSize: '1.2rem',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-    }}>
-      🌡️ <strong>Temperatura:</strong><br />
-     {ultimaLectura && ultimaLectura.temperatura !== 0
-  ? `${ultimaLectura.temperatura} °C`
-  : 'Sin lectura'}
-    </div>
-
-    <div style={{
-      flex: 1,
-      backgroundColor: '#fff',
-      borderLeft: '6px solid #2196F3',
-      padding: '1rem',
-      borderRadius: '8px',
-      textAlign: 'center',
-      fontSize: '1.2rem',
-      boxShadow: '0 2px 4px rgba(0,0,0,0.05)'
-    }}>
-      💧 <strong>Humedad:</strong><br />
-      {ultimaLectura ? `${ultimaLectura.humedad} %` : 'Sin lectura'}
-    </div>
-  </div>
+  <KpiCards />
+  
 
   {/* 📈 Chart */}
   <ChartPanel lecturas={lecturas} />
