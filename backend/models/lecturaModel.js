@@ -15,6 +15,7 @@ const obtenerUltimas = async () => {
     SELECT fecha, temperatura, humedad
     FROM lecturas
     ORDER BY fecha DESC
+    LIMIT 10
 
   `;
   const { rows } = await pool.query(query);
