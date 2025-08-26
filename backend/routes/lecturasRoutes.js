@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const {
   obtenerLecturas,
+  obtenerTodas,
   crearLectura,
   probarConexion
 } = require('../controllers/lecturaController');
@@ -15,5 +16,5 @@ router.get('/probar', probarConexion);
 // Rutas protegidas
 router.get('/', obtenerLecturas);
 router.post('/',  crearLectura);
-
+router.get('/todas',  obtenerTodas);
 module.exports = router;

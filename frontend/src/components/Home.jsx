@@ -30,6 +30,15 @@ const fetchLecturas = () => {
       .catch(console.error);
   };
 
+  const fetchTodasLecturas = () => {
+  fetch(`${API_URL}/api/lecturas/todas`)
+    .then(res => res.json())
+    .then(data => {
+      descargarExcel(data); // usa la misma función de descarga
+    })
+    .catch(console.error);
+};
+
   // 🕒 Actualización automática en horarios programados
   useEffect(() => {
     const horariosPermitidos = [
@@ -257,21 +266,21 @@ console.log("Última lectura en dashhhhhh:", ultimaLectura);
   <LecturasList lecturas={lecturas} />
 
   {/* 📁 Botón Excel */}
-  <button
-    onClick={ () => descargarExcel(lecturas)}
-    style={{
-      marginTop: '1rem',
-      padding: '0.7rem',
-      backgroundColor: '#2196F3',
-      color: 'white',
-      border: 'none',
-      borderRadius: '4px',
-      fontSize: '1rem',
-      cursor: 'pointer'
-    }}
-  >
-    Descargar Excel
-  </button>
+ <button
+  onClick={fetchTodasLecturas}  // ⬅️ Usa la función que sí trae *todas* las lecturas
+  style={{
+    marginTop: '1rem',
+    padding: '0.7rem',
+    backgroundColor: '#2196F3',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    fontSize: '1rem',
+    cursor: 'pointer'
+  }}
+>
+  📁 Descargar Excel (Todas las lecturas)
+</button>
 </div>
 
   );

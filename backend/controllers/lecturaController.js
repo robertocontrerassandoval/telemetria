@@ -35,9 +35,21 @@ const probarConexion = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Fallo de conexión a la base de datos' });
   }
+
 };
+
+ const obtenerTodas = async (req, res) => {
+  try {
+    const { rows } = await pool.query('SELECT * FROM lecturas ORDER BY fecha DESC');
+    res.json(rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener todas las lecturas' });
+  }
+}
 module.exports = {
   crearLectura,
+  obtenerTodas,
   obtenerLecturas,
   probarConexion
 };

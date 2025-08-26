@@ -22,7 +22,18 @@ const obtenerUltimas = async () => {
   return rows;
 };
 
+const obtenerTodas = async () => {
+  const query = `
+    SELECT fecha, temperatura, humedad
+    FROM lecturas
+    ORDER BY fecha ASC
+  `;
+  const { rows } = await pool.query(query);
+  return rows;
+};
+
 module.exports = {
   insertar,
-  obtenerUltimas
+  obtenerUltimas,
+  obtenerTodas
 };
