@@ -254,7 +254,7 @@ console.log("Última lectura en dashhhhhh:", ultimaLectura);
   )}
 
   {/* 🧾 Lista de lecturas */}
- 
+  <LecturasList lecturas={lecturas} />
 
   {/* 📁 Botón Excel */}
   <button
