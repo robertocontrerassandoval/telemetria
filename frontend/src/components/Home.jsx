@@ -164,8 +164,7 @@ console.log("Última lectura en dashhhhhh:", ultimaLectura);
   </h1>
 
   {/* KPI Cards */}
-  <KpiCards />
-  
+<KpiCards lectura={ultimaLectura} />  
 
   {/* 📈 Chart */}
   <ChartPanel lecturas={lecturas} />
