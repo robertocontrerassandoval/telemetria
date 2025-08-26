@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function LecturasList({ lecturas }) {
   const ultimas10 = lecturas
-    .slice(10) // toma las últimas 10 (del final)
+    .slice(-10) // toma las últimas 10 (del final)
     .reverse(); // las pone de la más reciente a la más antigua
 
   return (
